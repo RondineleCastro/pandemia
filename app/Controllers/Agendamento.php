@@ -59,46 +59,5 @@ class Agendamento extends BaseController
 	}
 
 
-	public function form()
-	{
-        return view('solic_form');
-    }
-
-	public function nova()
-	{
-        $solicModel = new SolicModel();
-
-		$array = ['TIPO' => $this->request->getVar('tipo'), 'STATUS' => 'PENDENTE'];
-		$tam = count($solicModel->where($array)->findAll());
-		$date=date_create(date("Y-m-d"));
-		date_add($date,date_interval_create_from_date_string(strval(floor(($tam / 4)) + 1) . " days"));
-		$entrega = date_format($date,"Y-m-d");
-		
-        $solicModel->save([
-            'NOME' => $this->request->getVar('nome'),
-            'CPF'  => $this->request->getVar('cpf'),
-			'DATAENTREG'  => $entrega,
-			'DATACONTAM'  => $this->request->getVar('datacontam'),
-			'DATAMELHORA'  => empty($this->request->getVar('datamelhora')) ? null : $this->request->getVar('datamelhora'),
-			'TIPO'  => $this->request->getVar('tipo')
-        ]);
-        return $this->response->redirect(site_url('/'));
-    }
-
-	public function relatorios()
-	{
-		$solicModel = new SolicModel();
-
-		if (strcmp($_SERVER['PHP_SELF'], '/index.php/relatorios') == 0) {
-			$data['solic'] = $solicModel->orderBy('id')->findAll();
-		} elseif (strcmp($_SERVER['PHP_SELF'], '/index.php/relatorios/pendentes') == 0) {
-			$data['solic'] = $solicModel->where('status', 'PENDENTE')->orderBy('id')->findAll();
-		} elseif (strcmp($_SERVER['PHP_SELF'], '/index.php/relatorios/concluidos') == 0) {
-			$data['solic'] = $solicModel->where('STATUS', "CONCLUIDO")->orderBy('id')->findAll();
-		} elseif (strcmp($_SERVER['PHP_SELF'], '/index.php/relatorios/cancelados') == 0) {
-			$data['solic'] = $solicModel->where('STATUS', "CANCELADO")->orderBy('id')->findAll();
-		}
-
-		return view('relatorios', $data);
-	}
+	
 }
