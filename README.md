@@ -75,4 +75,4 @@ Crie uma nova issue no repositório e responderemos o mais brevemente possível
 
 Envie-nos instruções claras de como rodar seu projeto (configurações de database, dados iniciais das tabelas, etc)  
 
-**Original test written by [Akita](https://t.co/W47ODZTOAc)**
+**Original test written by [Ricardo]**
